@@ -30,8 +30,8 @@ int b64decode(char *code, char **ptr)
   int clen = strlen(code);
   int len = 3*(clen/4) + 1;
 
-  printf("code length: %d allocated length: %d\n", clen, len);
-  char *result = malloc(len);
+//  printf("code length: %d allocated length: %d\n", clen, len);
+  char *result = malloc(len); // if base64 string is corrupt len may be off by 1
   *ptr = result;
 
   while ((x = *code++) != 0)
@@ -67,7 +67,7 @@ int b64decode(char *code, char **ptr)
       }
     }
 
-  *result = 0;
+  *result = 0; // not written on error
   return result - *ptr;
 }
 
@@ -140,7 +140,7 @@ int main(int argv, char *argc[]) {
   //setup initial state
   char *tmp = malloc(0x800);  
   load_config();
-  printf("%lx %lx\n", (u_int64_t) tmp, (u_int64_t) strblock);
+//  printf("%lx %lx\n", (u_int64_t) tmp, (u_int64_t) strblock);
   free(tmp);
   
   char line[1024];
