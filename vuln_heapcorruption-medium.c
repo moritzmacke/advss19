@@ -138,14 +138,10 @@ void acceptInput(char *input) {
 int main(int argv, char *argc[]) {
     
   //setup initial state
-  char *tmp = malloc(0x800);
-  
-  printf("%lx\n", (u_int64_t) tmp);
-  
+  char *tmp = malloc(0x800);  
   load_config();
+  printf("%lx %lx\n", (u_int64_t) tmp, (u_int64_t) strblock);
   free(tmp);
-  
-//  printf("%s\n",action2);  
   
   char line[1024];
   do {
@@ -154,8 +150,6 @@ int main(int argv, char *argc[]) {
       line[strcspn(line, "\n")] = '\0';
       acceptInput(line);
   } while(1);
-  
-//  printf("%s\n",action2);  
   
   return 0;  
 }
