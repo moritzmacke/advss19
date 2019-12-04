@@ -101,7 +101,7 @@ void acceptInput(char *input) {
   char *arg = &input[2];
   size_t arglen = llen - 2;
   
-  printf("line len: %lu arg len: %lu\n", llen, arglen);
+//  printf("line len: %lu arg len: %lu\n", llen, arglen);
   
   if(cmd == 'H') { //EHLO in real world example to set hostname
       free(helo);
@@ -137,6 +137,7 @@ void acceptInput(char *input) {
 
 int main(int argv, char *argc[]) {
     
+  //setup initial state
   char *tmp = malloc(0x800);
   
   printf("%lx\n", (u_int64_t) tmp);

@@ -162,7 +162,7 @@ int main(int argv, char *argc[]) {
   
 //  char line[1024];
   int i=0;
-  char line = lines[i++];
+  char *line = lines[i++];
   while(line != NULL) {
       acceptInput(line);
       line = lines[i++];
