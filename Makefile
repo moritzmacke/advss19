@@ -11,10 +11,9 @@
 # Each implemented target must remove the 'NOT IMPLEMENTED' output, and produce
 # an executable that has the same name as the target identifier.
 
-
-vuln_stackoverflow-entry: 
-	gcc_options="-fno-stack-protector -D_FORTIFY_SOURCE=0 -z execstack -z norelro -no-pie"
-	@echo 'NOT IMPLEMENTED'
+vuln_stackoverflow-entry: vuln_stackoverflow-entry.c
+	gcc_options="-m32 -fno-stack-protector -D_FORTIFY_SOURCE=0 -z execstack -z norelro -no-pie" ; \
+	gcc $$gcc_options -o $@ $<
 
 vuln_stackoverflow-medium: 
 	gcc_options="-fno-stack-protector -D_FORTIFY_SOURCE=0 -z relro -no-pie"
@@ -36,9 +35,9 @@ vuln_stackoverflow-elite:
 # Each implemented target must remove the 'NOT IMPLEMENTED' output, and produce
 # an executable that has the same name as the target identifier.
 
-vuln_formatstring-entry:
-	gcc_options="-fno-stack-protector -D_FORTIFY_SOURCE=0 -z execstack -z norelro -no-pie"
-	@echo 'NOT IMPLEMENTED'
+vuln_formatstring-entry: vuln_formatstring-entry.c
+	gcc_options="-fno-stack-protector -D_FORTIFY_SOURCE=0 -z execstack -z norelro -no-pie -g -m32" ; \
+	gcc $$gcc_options -o $@ $<
 
 vuln_formatstring-medium:
 	gcc_options="-fno-stack-protector -D_FORTIFY_SOURCE=0 -z relro -no-pie"
@@ -92,8 +91,12 @@ install: $(vuln_programs)
 # Implement, similarly, your chosen exploit targets
 #
 
-exploit_stackoverflow-entry: vuln_stackoverflow-entry
-	@echo 'NOT IMPLEMENTED'
+#exploit_stackoverflow-entry: vuln_stackoverflow-entry
+#	@echo 'NOT IMPLEMENTED'
+exploit_stackoverflow-entry: exploit_stackoverflow-entry.py vuln_stackoverflow-entry
+	/bin/bash -c 'source /home/vagrant/python-virtualenv/pwn/bin/activate; \
+	python ./exploit_stackoverflow-entry.py'
+
 
 exploit_stackoverflow-medium: vuln_stackoverflow-medium
 	@echo 'NOT IMPLEMENTED'
@@ -104,8 +107,9 @@ exploit_stackoverflow-advanced: vuln_stackoverflow-advanced
 exploit_stackoverflow-elite: vuln_stackoverflow-elite
 	@echo 'NOT IMPLEMENTED'
 
-exploit_formatstring-entry: vuln_formatstring-entry
-	@echo 'NOT IMPLEMENTED'
+exploit_formatstring-entry: exploit_formatstring-entry.py vuln_formatstring-entry
+	/bin/bash -c 'source /home/vagrant/python-virtualenv/pwn/bin/activate; \
+	python ./exploit_formatstring-entry.py'
 
 exploit_formatstring-medium: vuln_formatstring-medium
 	@echo 'NOT IMPLEMENTED'
